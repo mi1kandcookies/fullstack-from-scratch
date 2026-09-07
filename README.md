@@ -47,14 +47,16 @@ Windows, install Git with `winget install Git.Git` first, then clone.
 |---|---|---|
 | Package manager | Homebrew / apt / winget | Everything below comes from here, and can be updated from here. |
 | Version control | git, GitHub CLI (`gh`) | Commit, branch, open PRs, clone private repos, all from the terminal. |
-| JavaScript | Node LTS via `fnm`, `pnpm` | The web runs on it. `fnm` switches Node versions per project. |
+| JavaScript | Node LTS via `fnm` (with npm and npx), `pnpm`, Bun, TypeScript, `tsx` | The web runs on it. Any Astro, Vite, Next or Remotion project builds. `fnm` switches Node versions per project. |
 | Python | Python 3, `uv` | Scripts, data work, ML. `uv` replaces pip, venv and pyenv in one fast tool. |
+| Go, Rust | `go`, `rustup` + `cargo` | Services, CLIs, anything that has to be fast. Many agent tools are written in them. |
+| Databases | PostgreSQL (client + local server), SQLite | The two databases every full-stack app ends up on. |
 | Containers | Docker | Databases and services in a box, identical on every machine. |
-| Editor | Visual Studio Code | The editor the agents work inside. |
-| Agents | Claude Code, OpenAI Codex CLI | The coding agents. Claude Code is the primary one. |
-| Deploy | Vercel CLI | Ship a site from the terminal. |
+| Editor, browser | Visual Studio Code, Google Chrome | The editor the agents work inside, and the browser they drive. |
+| Agents | Claude Code, OpenAI Codex CLI, Playwright Chromium | The coding agents, and a headless browser so they can screenshot and test pages. |
+| Web tooling | Vercel CLI, `serve`, Prettier | Ship a site from the terminal, preview a static build, format everything. |
 | Search & shell | ripgrep, fd, fzf, jq, bat, eza, tmux | Fast search and a comfortable terminal. Agents use these too. |
-| Media | ffmpeg | Every video and audio task, from thumbnails to transcodes. |
+| Video & photo | ffmpeg, ImageMagick, exiftool, mpv, yt-dlp, HandBrake | Cut, trim, transcode, extract frames; resize and convert photos; read metadata; watch; fetch; a GUI for batch transcodes. |
 | Apps | Obsidian, OBS Studio, Anki | Notes, recording, memory. Free. |
 
 See [GUIDE.md](GUIDE.md) for each tool: what it is, what it is for, and how to check it

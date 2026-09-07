@@ -43,6 +43,28 @@ node_globals() {
     ensure "OpenAI Codex CLI" "have codex" npm install -g @openai/codex
   fi
   ensure "Vercel CLI" "have vercel" npm install -g vercel
+  say "Node tooling"
+  ensure "TypeScript" "have tsc" npm install -g typescript
+  ensure "tsx" "have tsx" npm install -g tsx
+  ensure "serve (static preview)" "have serve" npm install -g serve
+  ensure "Prettier" "have prettier" npm install -g prettier
+  if [ "$NO_AGENTS" = 0 ]; then
+    say "Playwright (Chromium for agents)"
+    note "installing the browser Playwright drives — agents use it to screenshot and test pages"
+    run npx --yes playwright install chromium
+    INSTALLED+=("Playwright Chromium")
+  fi
+}
+
+rust_toolchain() {
+  say "Rust"
+  if have cargo; then note "already installed"; SKIPPED+=("Rust")
+  else
+    if have rustup-init; then run rustup-init -y --no-modify-path; else run bash -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path"; fi
+    rc_line 'export PATH="$HOME/.cargo/bin:$PATH"'
+    export PATH="$HOME/.cargo/bin:$PATH"
+    INSTALLED+=("Rust")
+  fi
 }
 
 git_identity() {
@@ -67,7 +89,7 @@ summary() {
     note "Already there: ${SKIPPED[*]}"
   fi
   say "Versions"
-  for c in git gh node pnpm python3 uv docker code claude codex vercel rg fd fzf jq ffmpeg tmux; do
+  for c in git gh node pnpm bun tsc python3 uv go cargo psql sqlite3 docker code claude codex vercel rg fd fzf jq ffmpeg magick exiftool mpv yt-dlp tmux; do
     if have "$c"; then printf '  %-8s %s\n' "$c" "$($c --version 2>/dev/null | head -1 | cut -c1-60)"; fi
   done
   say "Next"

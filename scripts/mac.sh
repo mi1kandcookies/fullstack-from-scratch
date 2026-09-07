@@ -43,6 +43,7 @@ ensure "Node LTS" "fnm list | grep -q lts" fnm install --lts
 say "Python (uv)"
 ensure "Python 3.12 (uv-managed)" "uv python list --only-installed | grep -q 3.12" uv python install 3.12
 
+rust_toolchain
 node_globals
 git_identity
 summary

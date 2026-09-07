@@ -35,8 +35,24 @@ Fast Node Manager. Installs Node and switches versions per project (`.node-versi
 **Node.js (LTS)** · `node --version`
 The JavaScript runtime. Astro, Next.js, Remotion, Claude Code and Codex all run on it.
 
+**npm and npx** · `npm --version`
+Come with Node. `npm install` adds a project's packages; `npx <tool>` runs a tool without
+installing it globally (`npx create-astro@latest`, `npx playwright test`).
+
 **pnpm** · `pnpm --version`
 A faster, disk-efficient npm. `pnpm install` in any project. `npm` still works.
+
+**Bun** · `bun --version`
+A second JavaScript runtime and bundler, much faster for scripts and tests. `bun run x.ts`.
+
+**TypeScript, tsx** · `tsc --version`, `tsx --version`
+The type checker, and `tsx file.ts` to run a TypeScript file directly.
+
+**serve** · `serve --version`
+`serve dist` previews any static HTML build on localhost.
+
+**Prettier** · `prettier --version`
+Formats JS, TS, CSS, HTML, Markdown, JSON. `prettier --write .`
 
 ## Python
 
@@ -46,6 +62,24 @@ Scripts, data, ML, automation.
 **uv** · `uv --version`
 One tool for Python packages, virtual environments and Python versions. `uv init`,
 `uv add requests`, `uv run script.py`. Replaces pip, venv, pipx and pyenv.
+
+## Go and Rust
+
+**Go** · `go version`
+Simple, fast, one binary. `go run .` in a project. Many CLIs and servers are written in it.
+
+**Rust** · `cargo --version`
+Installed with `rustup`, which also updates it (`rustup update`). `cargo new`, `cargo run`.
+
+## Databases
+
+**PostgreSQL** · `psql --version`
+The database. The client (`psql`) talks to any Postgres, local or hosted (Supabase, Neon,
+Vercel Postgres). On a Mac `brew services start postgresql@16` runs a local server; on Linux
+and Windows use Docker or the installed server.
+
+**SQLite** · `sqlite3 --version`
+A database in a single file. `sqlite3 app.db` for anything small or local.
 
 ## Containers
 
@@ -59,6 +93,9 @@ one line. Desktop app on Mac and Windows, engine on Linux.
 **Visual Studio Code** · `code --version`
 The editor. The `code` command opens a folder from the terminal.
 
+**Google Chrome**
+The browser to check work in, and the one Playwright can drive when installed.
+
 ## Agents
 
 **Claude Code** · `claude --version`
@@ -68,6 +105,11 @@ edits files, runs commands, opens PRs. `/plugin` and the skills marketplace add 
 **OpenAI Codex CLI** · `codex --version`
 OpenAI's coding agent. `codex` in a project folder. A second opinion and a second pair of
 hands.
+
+**Playwright Chromium** · `npx playwright --version`
+A headless browser agents can drive: open a page, click, screenshot, run end-to-end tests.
+`npx playwright install chromium` fetched the browser; `npx playwright codegen <url>` records
+a test.
 
 **Finding skills** · `npx skills find <topic>`
 Skills are reusable instruction packs for agents (deploy steps, review checklists,
@@ -91,10 +133,29 @@ Deploy from the terminal: `vercel` for a preview, `vercel --prod` for production
 live in tmux.
 **curl, wget** — fetch anything.
 
-## Media
+## Video and photo
 
 **ffmpeg** · `ffmpeg -version`
 Convert, trim, resize, extract frames, mux audio. The tool behind every video pipeline.
+`ffmpeg -i in.mov -ss 0:05 -t 10 out.mp4` cuts ten seconds; `-frames:v 1` grabs a frame.
+
+**ImageMagick** · `magick --version`
+Photos from the terminal: resize, crop, convert, montage. `magick in.png -resize 50% out.webp`.
+
+**exiftool** · `exiftool -ver`
+Read and edit metadata: camera, lens, date, GPS. `exiftool photo.jpg`.
+
+**mpv** · `mpv --version`
+A fast, minimal video player. `mpv clip.mp4`. Frame-step with `.` and `,`.
+
+**yt-dlp** · `yt-dlp --version`
+Fetch a video or audio from almost any site. `yt-dlp <url>`.
+
+**HandBrake**
+A GUI for batch transcodes and presets when a one-line ffmpeg is not enough.
+
+In a Node project, `sharp` (`npm i sharp`) does fast image resizing and WebP encoding from
+code; it is a project dependency, not a global tool.
 
 ## Apps (free)
 

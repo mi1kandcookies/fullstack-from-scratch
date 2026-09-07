@@ -25,6 +25,11 @@ Say "Languages and managers"
 Winget-Ensure "fnm" "Schniz.fnm" { Have fnm }
 Winget-Ensure "uv" "astral-sh.uv" { Have uv }
 Winget-Ensure "Python 3.12" "Python.Python.3.12" { Have python }
+Winget-Ensure "Go" "GoLang.Go" { Have go }
+Winget-Ensure "Rust (rustup)" "Rustlang.Rustup" { Have cargo }
+Winget-Ensure "Bun" "Oven-sh.Bun" { Have bun }
+Winget-Ensure "PostgreSQL 16" "PostgreSQL.PostgreSQL.16" { Have psql }
+Winget-Ensure "SQLite" "SQLite.SQLite" { Have sqlite3 }
 
 Say "Search and shell"
 Winget-Ensure "ripgrep" "BurntSushi.ripgrep.MSVC" { Have rg }
@@ -38,6 +43,10 @@ Winget-Ensure "Windows Terminal" "Microsoft.WindowsTerminal" { Have wt }
 
 Say "Media"
 Winget-Ensure "ffmpeg" "Gyan.FFmpeg" { Have ffmpeg }
+Winget-Ensure "ImageMagick" "ImageMagick.ImageMagick" { Have magick }
+Winget-Ensure "ExifTool" "OliverBetz.ExifTool" { Have exiftool }
+Winget-Ensure "mpv" "shinchiro.mpv" { Have mpv }
+Winget-Ensure "yt-dlp" "yt-dlp.yt-dlp" { Have yt-dlp }
 
 if (-not $NoApps) {
   Say "Apps"
@@ -46,6 +55,8 @@ if (-not $NoApps) {
   Winget-Ensure "Obsidian" "Obsidian.Obsidian" { Test-Path "$env:LOCALAPPDATA\Programs\Obsidian" }
   Winget-Ensure "OBS Studio" "OBSProject.OBSStudio" { Test-Path "$env:ProgramFiles\obs-studio" }
   Winget-Ensure "Anki" "Anki.Anki" { Test-Path "$env:ProgramFiles\Anki" }
+  Winget-Ensure "HandBrake" "HandBrake.HandBrake" { Test-Path "$env:ProgramFiles\HandBrake" }
+  Winget-Ensure "Google Chrome" "Google.Chrome" { Test-Path "$env:ProgramFiles\Google\Chrome" }
 }
 
 # Refresh PATH for this session so fnm/npm are usable below.
@@ -70,6 +81,11 @@ if (Have npm) {
     if (-not (Have codex))  { if (-not $DryRun) { npm install -g @openai/codex }; $installed += "OpenAI Codex CLI" } else { $skipped += "OpenAI Codex CLI" }
   }
   if (-not (Have vercel)) { if (-not $DryRun) { npm install -g vercel }; $installed += "Vercel CLI" } else { $skipped += "Vercel CLI" }
+  Say "Node tooling"
+  foreach ($t in @(@("tsc","typescript","TypeScript"), @("tsx","tsx","tsx"), @("serve","serve","serve"), @("prettier","prettier","Prettier"))) {
+    if (-not (Have $t[0])) { if (-not $DryRun) { npm install -g $t[1] }; $installed += $t[2] } else { $skipped += $t[2] }
+  }
+  if (-not $NoAgents) { Say "Playwright (Chromium for agents)"; if (-not $DryRun) { npx --yes playwright install chromium }; $installed += "Playwright Chromium" }
 }
 
 Say "Done."

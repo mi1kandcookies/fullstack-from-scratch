@@ -11,7 +11,9 @@ say "System packages (apt)"
 run $SUDO apt-get update -y
 run $SUDO apt-get install -y --no-install-recommends \
   build-essential ca-certificates curl wget git gnupg unzip \
-  ripgrep fd-find fzf jq bat tmux ffmpeg python3 python3-venv python3-pip
+  ripgrep fd-find fzf jq bat tmux python3 python3-venv python3-pip \
+  ffmpeg imagemagick libimage-exiftool-perl mpv \
+  postgresql-client sqlite3 golang-go
 INSTALLED+=("apt packages")
 # Debian names two of these differently.
 [ -e "$HOME/.local/bin/fd" ] || { mkdir -p "$HOME/.local/bin"; ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd" 2>/dev/null || true; }
@@ -45,6 +47,14 @@ ensure "pnpm" "have pnpm" npm install -g pnpm
 say "Python (uv)"
 ensure "uv" "have uv" bash -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
 export PATH="$HOME/.local/bin:$PATH"
+ensure "yt-dlp" "have yt-dlp" uv tool install yt-dlp
+
+say "Bun"
+ensure "Bun" "have bun || [ -x \$HOME/.bun/bin/bun ]" bash -c "curl -fsSL https://bun.sh/install | bash"
+rc_line 'export PATH="$HOME/.bun/bin:$PATH"'
+export PATH="$HOME/.bun/bin:$PATH"
+
+rust_toolchain
 
 if [ "$NO_APPS" = 0 ]; then
   say "Docker Engine"
@@ -52,6 +62,8 @@ if [ "$NO_APPS" = 0 ]; then
   note "log out and in again for docker without sudo"
   say "Visual Studio Code"
   ensure "VS Code" "have code" bash -c "curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | $SUDO gpg --dearmor -o /usr/share/keyrings/microsoft.gpg --yes && echo 'deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main' | $SUDO tee /etc/apt/sources.list.d/vscode.list >/dev/null && $SUDO apt-get update -y && $SUDO apt-get install -y code"
+  ensure "HandBrake" "have ghb" bash -c "$SUDO apt-get install -y handbrake"
+  ensure "Google Chrome" "have google-chrome" bash -c "curl -fsSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/chrome.deb && $SUDO apt-get install -y /tmp/chrome.deb && rm /tmp/chrome.deb"
   note "Obsidian, OBS and Anki: install from their sites (AppImage / Flatpak / apt) — see GUIDE.md"
 fi
 
